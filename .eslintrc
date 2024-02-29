@@ -1,0 +1,76 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "plugin:import/recommended",
+    "prettier",
+  ],
+  "parser": "espree",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+    },
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+  },
+  "plugins": ["react", "react-hooks", "import", "prettier"],
+  "settings": {
+    "react": {
+      "version": "detect",
+    },
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "keyword-spacing": "error",
+    "no-unneeded-ternary": ["error", { "defaultAssignment": false }],
+    "prefer-template": "error",
+    "indent": "off",
+    "react/prop-types": 0,
+    "react/display-name": 0,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "padding-line-between-statements": [
+      "warn",
+      { "blankLine": "always", "prev": "*", "next": "return" },
+      { "blankLine": "always", "prev": "block-like", "next": "*" },
+      { "blankLine": "never", "prev": "block-like", "next": "break" },
+    ],
+    "import/first": "error",
+    "import/newline-after-import": ["warn", { "count": 1 }],
+    "sort-imports": ["warn", { "ignoreCase": true, "ignoreDeclarationSort": true }],
+    "import/order": [
+      "warn",
+      {
+        "newlines-between": "always-and-inside-groups",
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "type",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react*",
+            "group": "external",
+            "position": "before",
+          },
+          {
+            "pattern": "components/**",
+            "group": "internal",
+            "position": "before",
+          },
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+      },
+    ],
+  },
+}
