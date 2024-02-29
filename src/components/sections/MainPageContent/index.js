@@ -1,1 +1,1 @@
-export {MainPageContent} from './MainPageContent'
+export { MainPageContent } from './MainPageContent';
