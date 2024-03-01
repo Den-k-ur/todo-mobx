@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { observer } from 'mobx-react-lite';
 
@@ -8,14 +8,21 @@ import styles from './MainPageContent.module.css';
 
 import { useTodo } from './hooks';
 
-import { action } from 'mobx';
-
 import { useAppStore } from 'store';
 
 export const MainPageContent = observer(() => {
-  const { TodoList, addTodo, deleteTodo, completeTodo, filterTodo } = useAppStore();
-  const [newTodoItem, setNewTodoItem] = useState('');
-  const { checkedItems, handleTodoCheck } = useTodo();
+  const { TodoList } = useAppStore();
+
+  const {
+    handleNewTodo,
+    handleTodoCheck,
+    newTodoItem,
+    handleFilterTodo,
+    checkedItems,
+    handleDeleteToDo,
+    handleAddTodo,
+    handleCompleteTodo,
+  } = useTodo();
 
   return (
     <div className={styles.mainPageBlock}>
@@ -23,9 +30,7 @@ export const MainPageContent = observer(() => {
         <div className={styles.todoBlock}>
           {TodoList.map((item) => (
             <ToDoItem
-              onChange={(e) => {
-                handleTodoCheck(item.id, e.currentTarget.checked);
-              }}
+              onChange={handleTodoCheck(item.id)}
               key={item.id}
               description={item.isComplete ? `${item.name} (Выполнено)` : item.name}
             />
@@ -35,32 +40,20 @@ export const MainPageContent = observer(() => {
       <input
         type="text"
         className={styles.addToDoInput}
-        onChange={(e) => setNewTodoItem(e.currentTarget.value)}
+        onChange={handleNewTodo}
         value={newTodoItem}
       />
       <div className={styles.buttonsBlock}>
         <button
           disabled={newTodoItem.length < 1}
-          onClick={action(() => {
-            addTodo({ id: Date.now().toString(), name: newTodoItem, isComplete: false });
-            setNewTodoItem('');
-          })}
+          onClick={handleAddTodo(Date.now().toString(), newTodoItem, false)}
         >
           Добавить задачу
         </button>
-        <button
-          disabled={checkedItems.length < 1}
-          onClick={action(() => {
-            deleteTodo(checkedItems);
-            checkedItems.splice(0, checkedItems.length);
-          })}
-        >
+        <button disabled={checkedItems.length < 1} onClick={handleDeleteToDo}>
           Удалить задачу
         </button>
-        <button
-          disabled={checkedItems.length < 1}
-          onClick={action(() => completeTodo(checkedItems))}
-        >
+        <button disabled={checkedItems.length < 1} onClick={handleCompleteTodo}>
           Выполнить задачу
         </button>
       </div>
@@ -69,7 +62,7 @@ export const MainPageContent = observer(() => {
           <input
             type="checkbox"
             className={styles.addToDoInput}
-            onChange={(e) => filterTodo(true, e.currentTarget.checked)}
+            onChange={handleFilterTodo(true)}
           />
           <p>Показать только выполненные задачи</p>
         </div>
@@ -77,7 +70,7 @@ export const MainPageContent = observer(() => {
           <input
             type="checkbox"
             className={styles.addToDoInput}
-            onChange={(e) => filterTodo(false, e.currentTarget.checked)}
+            onChange={handleFilterTodo(false)}
           />
           <p>Показать только не выполненные задачи</p>
         </div>

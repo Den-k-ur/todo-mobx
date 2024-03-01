@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 
 export const ToDoItem = observer(({ description, onChange }) => {
   return (
-    <div className={styles.ToDoItemStyles}>
+    <div className={styles.ToDoItem}>
       <input type="checkbox" onChange={onChange} />
       <p>{description}</p>
     </div>
