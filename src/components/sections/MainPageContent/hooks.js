@@ -5,10 +5,15 @@ import { useAppStore } from 'store';
 import { action } from 'mobx';
 
 export const useTodo = () => {
-  const [checkedItems, setCheckedItems] = useState([]);
-  const [newTodoItem, setNewTodoItem] = useState('');
-
-  const { addTodo, deleteTodo, filterTodo, completeTodo } = useAppStore();
+  const {
+    addTodo,
+    deleteTodo,
+    filterTodo,
+    completeTodo,
+    setNewTodoItem,
+    checkedItems,
+    setCheckedItems,
+  } = useAppStore();
 
   const handleTodoCheck = useCallback(
     (id) => (event) => {
@@ -25,14 +30,14 @@ export const useTodo = () => {
     [checkedItems],
   );
 
-  const handleAddTodo = action((id, name, isComplit) => () => {
-    addTodo({ id: id, name: name, isComplit: isComplit });
+  const handleAddTodo = action((id, name, isComplete) => () => {
+    addTodo({ id: id, name: name, isComplete: isComplete });
     setNewTodoItem('');
   });
 
-  const handleNewTodo = useCallback((event) => {
+  const handleNewTodo = action((event) => {
     setNewTodoItem(event.currentTarget.value);
-  }, []);
+  });
 
   const handleDeleteToDo = action(() => {
     deleteTodo(checkedItems);
@@ -50,7 +55,6 @@ export const useTodo = () => {
     checkedItems,
     handleTodoCheck,
     handleAddTodo,
-    newTodoItem,
     setNewTodoItem,
     handleNewTodo,
     handleDeleteToDo,

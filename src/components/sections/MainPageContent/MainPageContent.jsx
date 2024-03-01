@@ -10,19 +10,14 @@ import { useTodo } from './hooks';
 
 import { useAppStore } from 'store';
 
-export const MainPageContent = observer(() => {
-  const { TodoList } = useAppStore();
+import { TodoActions } from './TodoActions';
 
-  const {
-    handleNewTodo,
-    handleTodoCheck,
-    newTodoItem,
-    handleFilterTodo,
-    checkedItems,
-    handleDeleteToDo,
-    handleAddTodo,
-    handleCompleteTodo,
-  } = useTodo();
+import { TodoFilters } from './TodoFilters';
+
+export const MainPageContent = observer(() => {
+  const { TodoList, newTodoItem } = useAppStore();
+
+  const { handleNewTodo, handleTodoCheck } = useTodo();
 
   return (
     <div className={styles.mainPageBlock}>
@@ -43,38 +38,9 @@ export const MainPageContent = observer(() => {
         onChange={handleNewTodo}
         value={newTodoItem}
       />
-      <div className={styles.buttonsBlock}>
-        <button
-          disabled={newTodoItem.length < 1}
-          onClick={handleAddTodo(Date.now().toString(), newTodoItem, false)}
-        >
-          Добавить задачу
-        </button>
-        <button disabled={checkedItems.length < 1} onClick={handleDeleteToDo}>
-          Удалить задачу
-        </button>
-        <button disabled={checkedItems.length < 1} onClick={handleCompleteTodo}>
-          Выполнить задачу
-        </button>
-      </div>
-      <div className={styles.filtersBlock}>
-        <div className={styles.flitersStyle}>
-          <input
-            type="checkbox"
-            className={styles.addToDoInput}
-            onChange={handleFilterTodo(true)}
-          />
-          <p>Показать только выполненные задачи</p>
-        </div>
-        <div className={styles.flitersStyle}>
-          <input
-            type="checkbox"
-            className={styles.addToDoInput}
-            onChange={handleFilterTodo(false)}
-          />
-          <p>Показать только не выполненные задачи</p>
-        </div>
-      </div>
+
+      <TodoActions />
+      <TodoFilters />
     </div>
   );
 });

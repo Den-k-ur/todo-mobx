@@ -1,0 +1,11 @@
+.filtersBlock {
+  display: flex;
+  gap: 40px;
+  max-width: 200px;
+  justify-content: center;
+}
+
+.flitersStyle {
+  display: flex;
+  white-space: nowrap;
+}

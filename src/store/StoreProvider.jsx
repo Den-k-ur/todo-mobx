@@ -10,6 +10,16 @@ class Store {
 
   TodoList = [];
   defaultTodo = [];
+  checkedItems = [];
+  newTodoItem = '';
+
+  setNewTodoItem = (item) => {
+    this.newTodoItem = item;
+  };
+
+  setCheckedItems = (items) => {
+    this.checkedItems = items;
+  };
 
   addTodo = (item) => {
     this.TodoList.push(item);
@@ -37,6 +47,8 @@ class Store {
 
   filterTodo = (isComplete, check) => {
     const filteredTodo = this.TodoList.filter((todo) => todo.isComplete === isComplete);
+
+    console.log(this.TodoList);
 
     check ? (this.TodoList = filteredTodo) : (this.TodoList = [...this.defaultTodo]);
   };
