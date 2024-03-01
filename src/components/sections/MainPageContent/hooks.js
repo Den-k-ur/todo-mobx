@@ -18,16 +18,10 @@ export const useTodo = () => {
   const handleTodoCheck = useCallback(
     (id) => (event) => {
       const newCheckedItems = [...checkedItems];
-      if (!event.currentTarget.checked) {
-        const index = checkedItems.indexOf(id);
-        newCheckedItems.splice(index, 1);
-      } else {
-        newCheckedItems.push(id);
-      }
-
-      setCheckedItems(newCheckedItems);
+      newCheckedItems.push(id);
+      setCheckedItems(newCheckedItems, event.target.checked, id);
     },
-    [checkedItems],
+    [],
   );
 
   const handleAddTodo = action((id, name, isComplete) => () => {
@@ -52,7 +46,6 @@ export const useTodo = () => {
   });
 
   return {
-    checkedItems,
     handleTodoCheck,
     handleAddTodo,
     setNewTodoItem,

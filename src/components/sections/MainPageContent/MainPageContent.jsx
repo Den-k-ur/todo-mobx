@@ -15,7 +15,7 @@ import { TodoActions } from './TodoActions';
 import { TodoFilters } from './TodoFilters';
 
 export const MainPageContent = observer(() => {
-  const { TodoList, newTodoItem } = useAppStore();
+  const { TodoList, newTodoItem, checkedItems } = useAppStore();
 
   const { handleNewTodo, handleTodoCheck } = useTodo();
 
@@ -28,6 +28,7 @@ export const MainPageContent = observer(() => {
               onChange={handleTodoCheck(item.id)}
               key={item.id}
               description={item.isComplete ? `${item.name} (Выполнено)` : item.name}
+              value={checkedItems.includes(item.id)}
             />
           ))}
         </div>

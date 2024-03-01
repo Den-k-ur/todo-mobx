@@ -17,8 +17,13 @@ class Store {
     this.newTodoItem = item;
   };
 
-  setCheckedItems = (items) => {
-    this.checkedItems = items;
+  setCheckedItems = (items, checked, id) => {
+    if (!checked) {
+      const index = this.checkedItems.indexOf(id);
+      this.checkedItems.splice(index, 1);
+    } else {
+      this.checkedItems = [...this.checkedItems, ...items];
+    }
   };
 
   addTodo = (item) => {
@@ -36,9 +41,10 @@ class Store {
 
   completeTodo = (checkedItems) => {
     this.TodoList.forEach((item) => {
-      checkedItems.forEach((check) => {
+      checkedItems.forEach((check, id) => {
         if (item.id === check) {
           item.isComplete = true;
+          checkedItems.splice(id, 1);
         }
       });
     });
@@ -47,9 +53,6 @@ class Store {
 
   filterTodo = (isComplete, check) => {
     const filteredTodo = this.TodoList.filter((todo) => todo.isComplete === isComplete);
-
-    console.log(this.TodoList);
-
     check ? (this.TodoList = filteredTodo) : (this.TodoList = [...this.defaultTodo]);
   };
 }
