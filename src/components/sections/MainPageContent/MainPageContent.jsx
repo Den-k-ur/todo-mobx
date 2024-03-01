@@ -24,7 +24,7 @@ export const MainPageContent = observer(() => {
           {TodoList.map((item) => (
             <ToDoItem
               onChange={(e) => {
-                handleTodoCheck(item.id.toString(), e.currentTarget.checked);
+                handleTodoCheck(item.id, e.currentTarget.checked);
               }}
               key={item.id}
               description={item.isComplete ? `${item.name} (Выполнено)` : item.name}
